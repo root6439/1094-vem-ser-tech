@@ -1,0 +1,25 @@
+* {
+  font-family: sans-serif;
+}
+
+p {
+  margin: 0;
+}
+
+.task {
+  display: flex;
+  justify-content: space-between;
+  border-radius: 8px;
+  padding: 4px;
+  color: #ffffff;
+  height: 20px;
+  margin-top: 8px;
+}
+
+.task-openned {
+  background-color: rgb(171, 227, 240);
+}
+
+.task-closed {
+  background-color: rgb(255, 119, 119);
+}
