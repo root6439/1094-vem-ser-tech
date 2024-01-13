@@ -27,3 +27,7 @@ p {
 .input-error {
   border-color: red;
 }
+
+div {
+  margin: 8px;
+}
