@@ -1,16 +1,52 @@
 import { Task } from "./shared/models/Task.js";
 
+// TODO implementar descrição da task
 let taskList = [];
+
+function inputValido(inputEl) {
+  if (inputEl instanceof HTMLInputElement) {
+    if (inputEl.value.length > 4) {
+      inputEl.classList = "";
+
+      if (inputEl.dataset.error === "true") {
+        document.querySelector("small").remove();
+      }
+
+      inputEl.dataset.error = "false";
+
+      inputEl.removeAttribute("error");
+      // inputEl.error = "false";
+
+      return true;
+    } else {
+      inputEl.classList.add("input-error");
+
+      let feedbackMessage = document.createElement("small");
+      feedbackMessage.style.color = "red";
+      feedbackMessage.textContent = "Digite ao menos 4 caracteres";
+
+      inputEl.insertAdjacentElement("afterend", feedbackMessage);
+
+      inputEl.dataset.error = "true";
+      return false;
+    }
+  }
+}
 
 window.addTask = (event) => {
   if (event instanceof PointerEvent) {
+    let input = document.querySelector("#nameTask");
+
+    if (!inputValido(input)) {
+      return;
+    }
+
+    let nameTask = input.value;
     let ul = document.querySelector("ul");
-    let nameTask = document.querySelector("#nameTask").value;
+
     let actualDate = new Date();
 
-    let dateFormatted = `${actualDate.getDate()}/${
-      actualDate.getMonth() + 1
-    }/${actualDate.getFullYear()}`;
+    let dateFormatted = formatDate(new Date());
 
     let newTask = new Task(taskList.length + 1, nameTask, dateFormatted, null);
     taskList.push(newTask);
@@ -34,7 +70,7 @@ window.addTask = (event) => {
     };
 
     // apaga as classes do elemento e substitui por classes novas
-    // li.classList = "task-item";
+    // li.classList = "task task-item";
 
     // apenas adiciona uma classe ao nosso element
     li.classList.add("task", "task-openned");
@@ -47,7 +83,7 @@ window.addTask = (event) => {
   }
 };
 
-window.finishTask = (event, id) => {
+window.finishTask = (li, id) => {
   // Buscando index com base numa condição
   // let taskIndex = taskList.findIndex((aux) => aux.id === id);
   // Removendo do array na posição do index encontrado
@@ -58,11 +94,11 @@ window.finishTask = (event, id) => {
   task.openned = false;
 
   //   De uma vez só
-  event.classList = "task task-closed";
+  li.classList = "task task-closed";
 
   //   Removendo e adicionando
-  event.classList.remove("task-openned");
-  event.classList.add("task-closed");
+  li.classList.remove("task-openned");
+  li.classList.add("task-closed");
 
   console.log(taskList);
 };

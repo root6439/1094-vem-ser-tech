@@ -23,3 +23,7 @@ p {
 .task-closed {
   background-color: rgb(255, 119, 119);
 }
+
+.input-error {
+  border-color: red;
+}
