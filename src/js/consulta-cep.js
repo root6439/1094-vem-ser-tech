@@ -1,11 +1,24 @@
+import { Address } from "./shared/models/Address.js";
+
 let formCep = document.forms[0];
 
 formCep.addEventListener("submit", (event) => {
   event.preventDefault();
-  console.log(event);
+
   let formData = new FormData(formCep);
-  console.log(formData.get("cep"));
-  console.log(formData.get("logradouro"));
+
+  let address = new Address();
+
+  address.bairro = formData.get("bairro");
+  address.cep = formData.get("cep");
+  address.complemento = formData.get("complemento");
+  address.localidade = formData.get("cidade");
+  address.logradouro = formData.get("logradouro");
+  address.numero = formData.get("numero");
+
+  localStorage.setItem("usuario_endereco", JSON.stringify(address));
+
+  console.log(address);
 });
 
 formCep[0].addEventListener("input", async (event) => {

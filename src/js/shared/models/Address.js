@@ -9,7 +9,8 @@ export class Address {
     ibge,
     gia,
     ddd,
-    siafi
+    siafi,
+    numero
   ) {
     this.cep = cep;
     this.logradouro = logradouro;
@@ -21,5 +22,6 @@ export class Address {
     this.gia = gia;
     this.ddd = ddd;
     this.siafi = siafi;
+    this.numero = numero;
   }
 }
