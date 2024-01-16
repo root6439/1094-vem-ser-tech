@@ -26,6 +26,7 @@ p {
 
 .input-error {
   border-color: red;
+  color: red;
 }
 
 div {
