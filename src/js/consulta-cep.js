@@ -2,7 +2,7 @@ import { Address } from "./shared/models/Address.js";
 
 let formCep = document.forms[0];
 
-formCep.addEventListener("submit", (event) => {
+formCep.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   let formData = new FormData(formCep);
@@ -17,9 +17,18 @@ formCep.addEventListener("submit", (event) => {
   address.numero = formData.get("numero");
 
   localStorage.setItem("usuario_endereco", JSON.stringify(address));
+  sessionStorage.setItem("usuario_endereco", JSON.stringify(address));
 
   console.log(address);
 });
+
+function setAux(value) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(value + 10);
+    }, 1000);
+  });
+}
 
 formCep[0].addEventListener("input", async (event) => {
   if (event.target.value.length >= 8) {
