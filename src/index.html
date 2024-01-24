@@ -11,7 +11,7 @@
       <script src="./js/task-list.js" type="module"></script>
     -->
     <!-- <script src="./js/consulta-cep.js" type="module" defer></script> -->
-    <script src="./js/sorteador.js" type="module" defer></script>
+    <!-- <script src="./js/sorteador.js" type="module" defer></script> -->
     <script type="module" src="./js/shared/models/index.js" defer></script>
   </head>
   <body>
@@ -98,12 +98,89 @@
       <button type="reset">Limpar</button>
     </form> -->
 
-    <label for="selectorGroups">Grupo: </label>
-    <select name="selectorGroups" id="selectorGroups">
-      <option value="maca">Maçã</option>
-      <option value="banana">Banana</option>
-      <option value="laranja">Laranja</option>
-      <option value="uva">Uva</option>
-    </select>
+    <!-- <label for="selectorGroups" primaryLabel>frutas: </label>
+    <select name="selectorGroups" id="selectorGroups" atributoCustom>
+      <option value="maca" atributoCustom>Maçã</option>
+      <option value="banana" atributoCustom>Banana</option>
+      <option value="laranja" atributoCustom>Laranja</option>
+      <option value="uva" atributoCustom>Uva</option>
+    </select> -->
+
+    <form onsubmit="login(event)">
+      <label for="email">E-mail:</label>
+      <input type="text" id="email" name="email" />
+
+      <label for="password">Senha</label>
+      <input type="password" id="password" name="password" required />
+
+      <button type="submit">Fazer login</button>
+    </form>
+
+    <script>
+      async function login(event) {
+        if (event instanceof SubmitEvent) {
+          event.preventDefault();
+
+          let formData = new FormData(event.target);
+          let email = formData.get("email");
+          let password = formData.get("password");
+
+          getData(email, password)
+            .then((resp) => {
+              localStorage.setItem("token", JSON.stringify(resp));
+              let tokenInString = localStorage.getItem("token");
+              let token = JSON.parse(tokenInString);
+            })
+            .catch((error) => {
+              console.log(error);
+              console.log(error.httpStatus);
+              console.log(error.errorCode);
+              alert(error.message);
+            });
+
+          // try {
+          //   let aux = await getData(email, password);
+
+          //   localStorage.setItem("token", JSON.stringify(aux));
+
+          //   let tokenInString = localStorage.getItem("token");
+          //   let token = JSON.parse(tokenInString);
+
+          //   console.log(token);
+          // } catch (error) {
+          //   console.log(error);
+          //   console.log(error.httpStatus);
+          //   console.log(error.errorCode);
+          //   alert(error.message);
+          // }
+        }
+        console.log(event);
+      }
+
+      function getData(email, password) {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            if (email == "teste@gmail.com") {
+              reject({
+                httpStatus: 400,
+                errorCode: "IFOOD- 1094",
+                message: "já existe um usuário com esse email",
+              });
+            }
+
+            if (password == "12345") {
+              reject({
+                httpStatus: 400,
+                errorCode: "IFOOD- 1095",
+                message:
+                  "Essa senha já está sendo usada pelo usuário teste@gmail.com",
+              });
+            }
+
+            resolve({ token: "sdfshkgjaojfjodfosj" });
+          }, 1000);
+        });
+      }
+    </script>
   </body>
 </html>
